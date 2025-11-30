@@ -1,6 +1,8 @@
 from groq import Groq
 
-client = Groq(api_key="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")
+GROQ_API_KEY_value = os.getenv("GROQ_API_KEY")
+
+client = Groq(api_key=GROQ_API_KEY_value)
 completion = client.chat.completions.create(
     model="groq/compound-mini",
     messages=[
