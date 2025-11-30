@@ -1,4 +1,3 @@
-from db import conn  # conn es psycopg2.connect()
 import requests
 from datetime import datetime
 import pytz
@@ -49,31 +48,8 @@ def send_telegram_message(token, chat_id, text):
         print("⚠️ Error enviando mensaje a Telegram:", e)
         return None
 
-#########################################
-# ------------- DATABASE ----------------
-#########################################
-
-def insert_word(word):
-    try:
-        cursor = conn.cursor()
-        cursor.execute("INSERT INTO my_schema_1.dates_table (word) VALUES (%s);", (word,))
-        conn.commit()
-        cursor.close()
-        return "OK"
-    except Exception as e:
-        return f"Error al insertar palabra: {e}"
-
-def count_rows_dates_table():
-    try:
-        cursor = conn.cursor()
-        cursor.execute("SELECT COUNT(*) FROM my_schema_1.dates_table")
-        count = cursor.fetchone()[0]
-        cursor.close()
-        return count
-    except Exception as e:
-        return f"Error al contar filas: {e}"
-
-#########################################
+#######
+    
 # ------------ MAIN LOGIC --------------
 #########################################
 
