@@ -1,24 +1,29 @@
 from groq import Groq
 import os
-GROQ_API_KEY_value = os.getenv("GROQ_API_KEY")
 
-client = Groq(api_key=str(GROQ_API_KEY_value))
+# API key
+GROQ_API_KEY_value = os.getenv("GROQ_API_KEY")
+if not GROQ_API_KEY_value:
+    raise ValueError("La variable de entorno GROQ_API_KEY no está definida.")
+
+client = Groq(api_key=GROQ_API_KEY_value)
+
 completion = client.chat.completions.create(
-    model="groq/compound-mini",
+    model="compound-mini",  # nombre correcto
     messages=[
-      {
-        "role": "user",
-        "content": ""
-      }
+        {
+            "role": "user",
+            "content": "Hola, probando la API de Groq."
+        }
     ],
     temperature=1,
-    max_completion_tokens=1024,
+    max_tokens=1024,
     top_p=1,
     stream=True,
     stop=None,
-    compound_custom={"tools":{"enabled_tools":["web_search","code_interpreter","visit_website"]}}
 )
 
 for chunk in completion:
-    print(chunk.choices[0].delta.content or "", end="")
-    
+    delta = chunk.choices[0].delta
+    if delta and delta.content:
+        print(delta.content, end="")
