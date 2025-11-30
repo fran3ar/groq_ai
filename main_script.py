@@ -2,7 +2,7 @@ from groq import Groq
 import os
 GROQ_API_KEY_value = os.getenv("GROQ_API_KEY")
 
-client = Groq(api_key=GROQ_API_KEY_value)
+client = Groq(api_key=str(GROQ_API_KEY_value))
 completion = client.chat.completions.create(
     model="groq/compound-mini",
     messages=[
