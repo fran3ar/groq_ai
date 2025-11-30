@@ -1,7 +1,7 @@
 from groq import Groq
 import os
 
-client = Groq(api_key=os.getenv("GROQ_API_KEY"))
+client = Groq(api_key="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")
 
 response = client.chat.completions.create(
     model="mixtral-8x7b-32768",
