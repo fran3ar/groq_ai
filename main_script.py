@@ -1,6 +1,5 @@
 import requests
 from datetime import datetime
-import pytz
 import os
 from groq import Groq
 #########################################
@@ -55,29 +54,11 @@ def send_telegram_message(token, chat_id, text):
 
 BOT_TOKEN = os.getenv("SECRET_BOT_TOKEN")
 CHAT_ID = 1618347339
-arg_tz = pytz.timezone("America/Argentina/Buenos_Aires")
 
 # --- Intentar insertar palabra ---
-insert_status = insert_word("test")
-
-# --- Intentar contar filas ---
-rows_count = count_rows_dates_table()
-
 # --- Obtener noticia Gemini ---
 news = status
 
-# --- Hora actual ---
-hora_actual = datetime.now(arg_tz).strftime("%Y-%m-%d %H:%M:%S")
-
-# --- Construir mensaje principal ---
-mensaje = (
-    f"🕒 Hora: {hora_actual}\n"
-    f"📥 Insertar palabra: {insert_status}\n"
-    f"📊 Total filas: {rows_count}\n"
-)
-
-# --- Enviar mensajes SIEMPRE ---
-send_telegram_message(BOT_TOKEN, CHAT_ID, mensaje)
 send_telegram_message(BOT_TOKEN, CHAT_ID, news)
 
 # --- Cerrar conexión (si existe) ---
