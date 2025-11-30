@@ -60,9 +60,3 @@ CHAT_ID = 1618347339
 news = status
 
 send_telegram_message(BOT_TOKEN, CHAT_ID, news)
-
-# --- Cerrar conexión (si existe) ---
-try:
-    conn.close()
-except:
-    pass
