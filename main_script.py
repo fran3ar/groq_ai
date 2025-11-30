@@ -1,11 +1,22 @@
 from groq import Groq
-import os
 
 client = Groq(api_key="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")
-
-response = client.chat.completions.create(
-    model="mixtral-8x7b-32768",
-    messages=[{"role": "user", "content": "Hello"}]
+completion = client.chat.completions.create(
+    model="groq/compound-mini",
+    messages=[
+      {
+        "role": "user",
+        "content": ""
+      }
+    ],
+    temperature=1,
+    max_completion_tokens=1024,
+    top_p=1,
+    stream=True,
+    stop=None,
+    compound_custom={"tools":{"enabled_tools":["web_search","code_interpreter","visit_website"]}}
 )
 
-print(response.choices[0].message["content"])
+for chunk in completion:
+    print(chunk.choices[0].delta.content or "", end="")
+    
